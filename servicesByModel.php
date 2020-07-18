@@ -76,10 +76,11 @@ function post($params)
 
         /* Array for default response */
         $myArr = [
-            //"marca" => $marca,
+            "marca" => "General",
             "modelo" => $modelo,
             "servicio" => "No disponible",
-            "precio" => "No disponible"
+            "precio" => "No disponible",
+            "img" => "https://www.mastecnologia.com.mx/mastec/images/Animaciones/android/sistemanandroid.gif"
         ];
 
         $i = 0;
@@ -89,10 +90,11 @@ function post($params)
         $resultado = mysqli_query($conexion, $consulta) or die("Algo ha ido mal en la consulta a la base de datos");
         while ($columna = mysqli_fetch_array($resultado)) {
             $myArr = [
-                //"marca" => $columna["marca"],
+                "marca" => $columna["marca"],
                 "modelo" => $columna["modelo"],
                 "servicio" => $columna["servicio"],
-                "precio" => $columna["precio_publ"]
+                "precio" => $columna["precio_publ"],
+                "img" => $columna["image_link"],
             ];
             $servs[$i] = $myArr;
             $i++;
