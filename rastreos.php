@@ -39,14 +39,35 @@ function getp($params)
     $users;
     $i = 0;
     $users[$i] = array("marca" => "No encontrado");
-    $consulta = "SELECT * FROM servicio where folio =\"" . $params["Folio"] . "\"";
+    $consulta = "SELECT * FROM servicios_mastec where folio =\"" . $params["Folio"] . "\"";
     $resultado = mysqli_query($conexion, $consulta) or die("Algo ha ido mal en la consulta a la base de datos");
     while ($columna = mysqli_fetch_array($resultado)) {
+        switch($columna["estado_dispositivo"]){
+            case 1:
+                $estado = "En recolección";
+            break;
+            case 2:
+                $estado = "En diagnostico";
+            break;
+            case 3:
+                $estado = "En reparación";
+            break;
+            case 4:
+                $estado = "Listo para entrega";
+            break;
+            case 5:
+                $estado = "Enviando a domicilio";
+            break;
+            case 6:
+                $estado = "Dispositivo entregado";
+            break;
+        }
         $myArr = [
             "id" => $columna["id"],
             "marca" => $columna["marca"],
             "modelo" => $columna["modelo"],
-            "estado" => $columna["estatus"]
+            "estado" => $estado,
+            "servicio" => $columna["servicio"]
         ];
         $users[$i] = $myArr;
         $i++;
